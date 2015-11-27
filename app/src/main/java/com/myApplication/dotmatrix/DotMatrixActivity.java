@@ -59,6 +59,7 @@ public class DotMatrixActivity extends AppCompatActivity {
                 if (!start) {
 
                 } else {
+                    //value라는 값이 지금 현재 입력한 값
                     if (value.length() > 50) {
                         handler.post(new Runnable() {
                             public void run() {
@@ -68,12 +69,14 @@ public class DotMatrixActivity extends AppCompatActivity {
                         start = false;
                         continue;
                     } else {
+                        //50글자 안넘어서 들어왔음
                         int i, j , ch;
                         char buf[]= new char[100];
-                        buf = value.toCharArray();
+                        buf = value.toCharArray(); //value값을 charArray로 바꾼뒤 buf에 집어 넣는다.
+                        DotMatrixControl(value);
                         result = "00000000000000000000";
-                        for (i = 0; i < value.length(); i++) {
-                            ch = Integer.valueOf(buf[i]);
+                        for (i = 0; i < value.length(); i++) { //받아온 value값까지 for문을 돌린다.
+                            ch = Integer.valueOf(buf[i]); //charArray로 바꾼 buf 값을 Asci로 바꾼다.
                             if (ch < 32 || ch > 126) {
                                 handler.post(new Runnable() {
                                     public void run() {
@@ -85,19 +88,29 @@ public class DotMatrixActivity extends AppCompatActivity {
                                 break;
                             }
                             ch -= 0x20;
-
+                            //ch가 결론적으로 각 문자의 아스키 코드
+                            DotMatrixControl(value);
+                            /*
                             // copy
                             for (j = 0; j < 5; j++) {
+
                                 String str = new String();
+                                //폰트 변환 부분
                                 str = Integer.toHexString((font[ch][j]));
+                                //아스키코드 ch를 집어 넣고, 해당하는 값을 result에 추가한다.(총 5개)
                                 if (str.length() < 2)
                                     result += "0";
-
                                 result += str;
                             }
+                            //한글자 끝나면 00을 추가한다.
                             result += "00";
-                        }
-                        result += "00000000000000000000";
+                            */
+                    }
+
+                        /*
+                        //그리고 모든 글자가 끝난 뒤에 이 값을 추가한다.
+                        result += "00000000000000000000";//총 20개
+                        DotMatrixControl(result);
                         // print
                         for (i = 0; i < (result.length() - 18) / 2; i++) {
                             // speed control
@@ -111,8 +124,9 @@ public class DotMatrixActivity extends AppCompatActivity {
                                 }
                             }
                         }
+                        */
                     }
-                    DotMatrixControl("00000000000000000000");
+
                     }
 
                 }
